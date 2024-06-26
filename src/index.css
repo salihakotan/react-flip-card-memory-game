@@ -11,3 +11,45 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.header{
+  padding: 30px;
+  text-align: center;
+  background-color: #1c1c1c;
+  color: white;
+}
+
+.pageContent{
+  background-color: #dedede;
+  padding: 30px;
+  min-height: 550px;
+}
+
+.footer {
+  background-color: rgb(63, 63, 63);
+  color: white;
+  text-align: center;
+  padding: 15px;
+}
+
+
+.cardsGrid{
+  grid-template-columns: repeat(4, 1fr);
+    display: grid;
+    gap: 15px;
+    width: fit-content;
+    margin: 50px auto 30px auto;
+}
+
+.cardImage{
+  width: 120px;
+}
+
+.coverImage{
+  width: 120px;
+  position: absolute;
+}
+
+.cardItem{
+}
