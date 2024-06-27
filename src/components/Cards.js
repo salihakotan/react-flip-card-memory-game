@@ -1,31 +1,68 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { cardsSelector } from "../redux/cardsSlice";
-import cover from "../images/cover.png"
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { cardsSelector, leftCardsSelector, resetGame, updateMoves, updateScore, updateStat } from "../redux/cardsSlice";
+import Card from "./Card";
 
 function Cards() {
   const cards = useSelector(cardsSelector);
+  const leftCards = useSelector(leftCardsSelector);
+
+  const [prev,setPrev] = useState(-1)
+
+  const dispatch = useDispatch()
 
 
 
-  const handleClickImage = (id) => {
+    const check = (current) => {
+        console.log("will check")
+            if(cards[current].id === cards[prev].id){
+                dispatch(updateScore(50))
+                dispatch(updateStat({id:current, stat:"correct"}))
+                dispatch(updateStat({id:prev, stat:"correct"}))
+                setPrev(-1)
+            }else {
+               
+                dispatch(updateScore(-10))
+                dispatch(updateStat({id:current, stat:"wrong"}))
+                dispatch(updateStat({id:prev, stat:"wrong"}))
+                setPrev(-1)
+                setTimeout(() => {
+                        dispatch(updateStat({id:current, stat:""}))
+                        dispatch(updateStat({id:prev, stat:""}))
+                }, 1000);
+            }
+    }
 
-    //is first? //setfirst id
-    //else compare id
-    console.log("id",id)
+
+
+  const handleClickCard = (id) => {
+    dispatch(updateMoves())
+
+    if(prev === -1){
+        dispatch(updateStat({id,stat:"active"}))
+        setPrev(id)
+    }else{
+        check(id)
+    }
+    
   }
 
   return (
     <div className="pageContent">
+
+
       <div className="cardsGrid">
         {cards &&
           cards.map((card,i) => (
-            <div onClick={()=>handleClickImage(card.id)} key={i} className="cardItem">
-                <img className="coverImage" src={cover} alt="cover"/>
-                <img className="cardImage" src={card.image} alt="cardImage" />
-            </div>
+                <Card key={i} id={i} item={card} handleClickCard={handleClickCard} />
           ))}
       </div>
+
+          {leftCards <= 0 && (
+            <div className="playAgainDiv"> <button className="playAgainBtn" onClick={() => dispatch(resetGame())}>Play Again</button></div>
+          )}
+
+
     </div>
   );
 }

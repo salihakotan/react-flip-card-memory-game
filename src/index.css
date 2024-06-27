@@ -35,21 +35,109 @@ code {
 
 
 .cardsGrid{
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4,1fr);
+  grid-template-rows: repeat(4,1fr);
     display: grid;
     gap: 15px;
     width: fit-content;
     margin: 50px auto 30px auto;
 }
 
-.cardImage{
-  width: 120px;
-}
-
 .coverImage{
   width: 120px;
   position: absolute;
+  display: block;
 }
 
+
 .cardItem{
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  border: 5px solid #ff000000;
+
+  transition: transform 0.5s;
+  transform: rotateY(180deg);
+  animation: 2s hideCard linear;
+}
+
+@keyframes hideCard {
+  0%,70%{
+    transform: rotateY(0deg);
+  }
+  100%{
+    transform: rotateY(180deg);
+  }
+}
+
+.cardItem img{
+  width: 110px;
+  transition: transform 0.5s;
+  transform: scale(0);
+  animation: 2s hideImage linear;
+}
+
+@keyframes hideImage {
+   0%,70%{
+    transform: scale(1);
+   }
+   100%{
+    transform:scale(0)
+   }
+}
+
+
+.cardItem.active {
+  transform: rotateY(0);
+}
+
+.cardItem.correct{
+  background-color: green;
+  border: 5px solid green;
+}
+
+.cardItem.wrong{
+  background-color: red;
+  border: 5px solid red;
+
+}
+
+
+.cardItem.active img {
+  transform: scale(1);
+}
+
+
+.playAgainBtn {
+  background: #030c6c;
+  border: 2px solid #fff;
+  color:white;
+  width:150px;
+  height: 45px;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.playAgainBtn:hover {
+  background: #2c36a6;
+}
+
+.playAgainDiv {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.scoreArea{
+  padding-left: 15px;
+  padding-bottom: 10px;
+  display: flex;
+  background-color: #1c1c1c;
+  color: white;
+}
+.scoreArea p{
+  margin: 10px;
 }
